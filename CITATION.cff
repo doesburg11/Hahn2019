@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+message: "Please cite the original Hahn et al. (2019) paper when using this research reconstruction."
+title: "Hahn2019: an approximate SELFish flocking reconstruction"
+type: software
+authors:
+  - family-names: van Doesburg
+    given-names: Peter
+license: MIT
+references:
+  - type: conference-paper
+    title: "Emergent Escape-based Flocking Behavior using Multi-Agent Reinforcement Learning"
+    authors:
+      - family-names: Hahn
+        given-names: Carsten
+      - family-names: Phan
+        given-names: Thomy
+      - family-names: Gabor
+        given-names: Thomas
+      - family-names: Belzner
+        given-names: Lenz
+      - family-names: Linnhoff-Popien
+        given-names: Claudia
+    year: 2019
+    doi: 10.1162/isal_a_00226
