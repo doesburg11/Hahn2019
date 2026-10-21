@@ -137,6 +137,7 @@ def test_old_checkpoint_without_wrap_flag_evaluates_and_renders(tmp_path,monkeyp
     train(output,EnvConfig(max_steps=1),LearnConfig(algorithm='ddpg'),1,42)
     checkpoint=torch.load(output/'policy.pt',weights_only=True)
     checkpoint['metadata']['learning'].pop('wrap_ddpg_actions')
+    checkpoint['metadata']['learning'].pop('initialization')
     legacy=tmp_path/'legacy.pt'
     torch.save(checkpoint,legacy)
     result=evaluate_main(['--checkpoint',str(legacy),'--seeds','100','--episodes','1',

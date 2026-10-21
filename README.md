@@ -82,3 +82,14 @@ An 80-frame display of the seed-42 DQN smoke checkpoint with 40 prey. This is an
 ## Attribution
 
 Original implementation for this repository, MIT licensed. The paper is credited as the research source; its PDF and figures are not redistributed. Created with OpenAI Codex assistance, with independent Codex CLI review of nontrivial code. No source code from PredPreyGrass, Phan2022, or an author flocking repository was imported.
+
+To test the historical Keras initialization profile independently of other settings:
+
+```bash
+.conda/bin/python train.py --algorithm dqn --steps 500000 --seed 42 \
+  --env-config configs/assumed_environment.json \
+  --initialization glorot_zero_bias --output output/dqn_glorot_s42
+```
+
+The default is `torch_default`; older checkpoint metadata remains supported.
+See `RESULTS.md` for the controlled two-seed experiment protocol and limitations.

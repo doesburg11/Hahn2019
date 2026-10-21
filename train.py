@@ -112,6 +112,7 @@ def train(output, env_config, learn_config, steps, seed, progress_every=5000):
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--algorithm", choices=("dqn", "ddpg"), default="dqn")
+    parser.add_argument("--initialization", choices=("torch_default", "glorot_zero_bias"), default="torch_default")
     parser.add_argument("--steps", type=positive_int, default=5000)
     parser.add_argument("--seed", type=seed_int, default=42)
     parser.add_argument("--env-config", type=Path)
@@ -124,7 +125,7 @@ def main(argv=None):
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args(argv)
     return train(args.output, environment_config(args.env_config, args.algorithm),
-                 LearnConfig(algorithm=args.algorithm, warmup=args.warmup,
+                 LearnConfig(algorithm=args.algorithm, initialization=args.initialization, warmup=args.warmup,
                              target_interval=args.target_interval, tau=args.tau,
                              action_units=args.ddpg_action_units, wrap_ddpg_actions=args.wrap_ddpg_actions),
                  args.steps, args.seed, args.progress_every)

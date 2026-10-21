@@ -14,6 +14,14 @@ def mlp(inputs, outputs, depth, width):
     return nn.Sequential(*layers, nn.Linear(inputs, outputs))
 
 
+def initialize_glorot(network):
+    """Match historical Keras Dense initialization distributions, not RNG streams."""
+    for layer in network.modules():
+        if isinstance(layer, nn.Linear):
+            nn.init.xavier_uniform_(layer.weight)
+            nn.init.zeros_(layer.bias)
+
+
 @dataclass(frozen=True)
 class LearnConfig:
     algorithm: str = "dqn"
@@ -25,7 +33,11 @@ class LearnConfig:
     wrap_ddpg_actions: bool = False    # Optional periodic-action stabilization variant.
     action_units: str = "degrees"      # Paper describes DDPG turns as real-valued degrees.
 
+    initialization: str = "torch_default"  # Optional historical Keras Dense profile.
+
     def __post_init__(self):
+        if self.initialization not in ("torch_default", "glorot_zero_bias"):
+            raise ValueError("invalid initialization profile")
         if self.action_units not in ("degrees", "radians"):
             raise ValueError("action_units must be degrees or radians")
         if self.algorithm not in ("dqn", "ddpg"):
@@ -93,9 +105,13 @@ class Learner:
         torch.manual_seed(seed)
         continuous = config.algorithm == "ddpg"
         self.actor = mlp(obs_dim, 1 if continuous else 5, 5 if continuous else 10, 16)
+        if config.initialization == "glorot_zero_bias":
+            initialize_glorot(self.actor)
         self.target_actor = deepcopy(self.actor)
         self.actor_optimizer = torch.optim.Adam(self.actor.parameters(), lr=config.learning_rate)
         self.critic = mlp(obs_dim+1, 1, 5, 32) if continuous else None
+        if continuous and config.initialization == "glorot_zero_bias":
+            initialize_glorot(self.critic)
         self.target_critic = deepcopy(self.critic)
         self.critic_optimizer = torch.optim.Adam(self.critic.parameters(), lr=config.learning_rate) if continuous else None
         self.batch_size = 512 if continuous else 64

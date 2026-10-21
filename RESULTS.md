@@ -109,3 +109,26 @@ A follow-up CLI review of the corrections found **no remaining actionable correc
 ## Open reproduction work
 
 Run the 500,000-step budget across independent seeds, inspect held-out censoring and flock metrics, and vary the unreported ecology and DDPG noise/unit assumptions. Compare matched retraining with and without predator confusion, test pinned-predator grouping, and tune Boids separately. The paper's KDE-before-death analysis and exact figures are not reproduced. Unknown original speeds, confusion radius, commitment and leap timing prevent claiming an exact reproduction even at the reported training budget.
+
+### Initialization-only experiment (2026-10-21)
+
+Two new DQN runs use `--initialization glorot_zero_bias`, seeds 42 and 43,
+500,000 environment steps each. This switches all dense weights to Xavier
+uniform and biases to zero, matching the historical Keras Dense distributions
+rather than its random stream. The existing `torch_default` remains the default.
+The control checkpoints are `output/paper_budget_20261020_235544/dqn_s42` and
+`dqn_s43`. Learning configuration and environment configuration are checked for
+identity apart from initialization before launch. Each job automatically runs
+40-prey evaluation with seeds 100/101/102, three capped episodes per seed and
+5,000 continuous population frames per seed, matching the earlier controls.
+
+This is a paired exploratory comparison with two training seeds, not a faithful
+paper reproduction: ecology assumptions, target synchronization, loss and other
+known implementation differences remain. No performance conclusion is available
+at launch. Each timestamped output directory contains its commands, control paths,
+source commit, progress, checkpoints and evaluation results.
+
+Validation: 40 tests passed; a 1,200-step Glorot DQN smoke run completed 201
+updates with finite parameters. Independent Codex review identified positional
+configuration compatibility and missing DDPG/default-RNG, legacy-checkpoint and
+CLI-metadata coverage; these were addressed and the full suite passed.
