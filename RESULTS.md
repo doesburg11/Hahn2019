@@ -2,6 +2,14 @@
 
 This log distinguishes execution checks from scientific reproduction. Full-budget runs are evaluated below; an emergent-flocking reproduction has not been established. An animation is not evidence that grouping was learned; aligned escape from a common predator is also insufficient evidence of active cohesion.
 
+## Wrapped-run completion and fidelity investigation — 2026-10-21
+
+Both optional wrapped DDPG runs completed 500,000 steps and 499,001 updates, and their held-out evaluations completed. Seed 42 had mean capped focal survival 981 frames and 636/14,700 population captures; seed 43 had 409.7 frames and 1,024/14,700 captures. No focal evaluation life was censored in either condition. Their normalized pair distances (0.384 and 0.372) remained close to random (0.375). Stabilization prevented the observed overflow in these two runs but did not reproduce flocking. Raw records: [results/wrapped_ddpg_20261021](results/wrapped_ddpg_20261021).
+
+The [fidelity audit](FIDELITY_AUDIT.md) found differences in historical initialization, target update rates, OU noise, TD-loss scale and time-limit handling; these are reference-library comparisons, not recovered author overrides. It also found that the thesis lists four DQN neighbors while the paper lists five. A controlled action-count check showed DQN seed 43 chose +90° on all 600,000 tested population decisions and exactly matched the fixed +90° control. DQN seed 42 outperformed all fixed-turn controls tested, but learned flocking remains unestablished.
+
+No additional long training was launched by the investigation and the production learning defaults remain unchanged. The priority is a separately labeled historical-default compatibility experiment, starting with initialization, rather than more duration under the same assumptions.
+
 ## Full-budget runs and held-out evaluation — 2026-10-21
 
 The original DQN seeds 42/43 and DDPG seed 43 completed 500,000 environment steps and 499,001 optimizer updates each. DDPG seed 42 failed. These runs used the 10,000-frame episode cap and the documented assumed ecology; they remain approximate reconstructions.

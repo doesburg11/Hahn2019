@@ -53,6 +53,10 @@ Training saves `config.json`, `training.json` (completed episodes, partial episo
 
 The runner is sequential and CPU-only. PyTorch initialization/thread settings are process-global; use separate processes and distinct output directories for concurrency. Interrupted runs may contain incomplete artifacts: inspect them and use a new output directory for a rerun.
 
+## Fidelity audit
+
+The [2026-10-21 investigation](FIDELITY_AUDIT.md) identifies historical Keras-RL/default differences, a four-versus-five-neighbor source conflict, initialization diagnostics, ecology sensitivity and a constant-turn collapse in DQN seed 43. It includes reproducible diagnostic scripts and raw results. No learner defaults were changed by the audit.
+
 ## Fidelity and limits
 
 The primary paper was read directly, including visual inspection of Table 1. [METHODS.md](METHODS.md) maps each implementation decision to either the paper or an explicit reconstruction assumption. The DQN and DDPG configurations are different, including neighborhood size and batch size. This is a PyTorch rebuild of the described methods, not a Keras-RL compatibility implementation.

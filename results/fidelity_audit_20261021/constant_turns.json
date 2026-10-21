@@ -1,0 +1,218 @@
+{
+  "source_revision": "14dba53a06d0dc8a6dce3ca3dabfff357f6d7126",
+  "frames_per_seed": 5000,
+  "burnin": 100,
+  "n_prey": 40,
+  "seeds": [
+    100,
+    101,
+    102
+  ],
+  "action_counts_include_burnin": true,
+  "rows": [
+    {
+      "condition": "constant_-90",
+      "seed": 100,
+      "captures": 344,
+      "frames": 4900,
+      "mean_pair_distance_over_side": 0.37542735064804383,
+      "all_frame_action_counts": null
+    },
+    {
+      "condition": "constant_-90",
+      "seed": 101,
+      "captures": 315,
+      "frames": 4900,
+      "mean_pair_distance_over_side": 0.3763140057995256,
+      "all_frame_action_counts": null
+    },
+    {
+      "condition": "constant_-90",
+      "seed": 102,
+      "captures": 328,
+      "frames": 4900,
+      "mean_pair_distance_over_side": 0.3718181696315043,
+      "all_frame_action_counts": null
+    },
+    {
+      "condition": "constant_-45",
+      "seed": 100,
+      "captures": 322,
+      "frames": 4900,
+      "mean_pair_distance_over_side": 0.3742720256680371,
+      "all_frame_action_counts": null
+    },
+    {
+      "condition": "constant_-45",
+      "seed": 101,
+      "captures": 327,
+      "frames": 4900,
+      "mean_pair_distance_over_side": 0.375952996455797,
+      "all_frame_action_counts": null
+    },
+    {
+      "condition": "constant_-45",
+      "seed": 102,
+      "captures": 329,
+      "frames": 4900,
+      "mean_pair_distance_over_side": 0.37056707730383875,
+      "all_frame_action_counts": null
+    },
+    {
+      "condition": "constant_0",
+      "seed": 100,
+      "captures": 316,
+      "frames": 4900,
+      "mean_pair_distance_over_side": 0.38140707926478096,
+      "all_frame_action_counts": null
+    },
+    {
+      "condition": "constant_0",
+      "seed": 101,
+      "captures": 288,
+      "frames": 4900,
+      "mean_pair_distance_over_side": 0.3842261853998859,
+      "all_frame_action_counts": null
+    },
+    {
+      "condition": "constant_0",
+      "seed": 102,
+      "captures": 299,
+      "frames": 4900,
+      "mean_pair_distance_over_side": 0.3827715252662247,
+      "all_frame_action_counts": null
+    },
+    {
+      "condition": "constant_45",
+      "seed": 100,
+      "captures": 370,
+      "frames": 4900,
+      "mean_pair_distance_over_side": 0.3731892376919736,
+      "all_frame_action_counts": null
+    },
+    {
+      "condition": "constant_45",
+      "seed": 101,
+      "captures": 311,
+      "frames": 4900,
+      "mean_pair_distance_over_side": 0.3768627115708163,
+      "all_frame_action_counts": null
+    },
+    {
+      "condition": "constant_45",
+      "seed": 102,
+      "captures": 328,
+      "frames": 4900,
+      "mean_pair_distance_over_side": 0.3721105001790494,
+      "all_frame_action_counts": null
+    },
+    {
+      "condition": "constant_90",
+      "seed": 100,
+      "captures": 312,
+      "frames": 4900,
+      "mean_pair_distance_over_side": 0.37655678124365977,
+      "all_frame_action_counts": null
+    },
+    {
+      "condition": "constant_90",
+      "seed": 101,
+      "captures": 316,
+      "frames": 4900,
+      "mean_pair_distance_over_side": 0.37226035357854986,
+      "all_frame_action_counts": null
+    },
+    {
+      "condition": "constant_90",
+      "seed": 102,
+      "captures": 356,
+      "frames": 4900,
+      "mean_pair_distance_over_side": 0.3739771107177208,
+      "all_frame_action_counts": null
+    },
+    {
+      "condition": "dqn_s42",
+      "seed": 100,
+      "captures": 9,
+      "frames": 4900,
+      "mean_pair_distance_over_side": 0.3312985545803767,
+      "all_frame_action_counts": [
+        63,
+        124950,
+        3468,
+        71512,
+        7
+      ]
+    },
+    {
+      "condition": "dqn_s42",
+      "seed": 101,
+      "captures": 6,
+      "frames": 4900,
+      "mean_pair_distance_over_side": 0.32269047350410585,
+      "all_frame_action_counts": [
+        109,
+        123158,
+        3209,
+        73524,
+        0
+      ]
+    },
+    {
+      "condition": "dqn_s42",
+      "seed": 102,
+      "captures": 9,
+      "frames": 4900,
+      "mean_pair_distance_over_side": 0.3227470823962651,
+      "all_frame_action_counts": [
+        107,
+        132352,
+        2428,
+        65105,
+        8
+      ]
+    },
+    {
+      "condition": "dqn_s43",
+      "seed": 100,
+      "captures": 312,
+      "frames": 4900,
+      "mean_pair_distance_over_side": 0.37655678124365977,
+      "all_frame_action_counts": [
+        0,
+        0,
+        0,
+        0,
+        200000
+      ]
+    },
+    {
+      "condition": "dqn_s43",
+      "seed": 101,
+      "captures": 316,
+      "frames": 4900,
+      "mean_pair_distance_over_side": 0.37226035357854986,
+      "all_frame_action_counts": [
+        0,
+        0,
+        0,
+        0,
+        200000
+      ]
+    },
+    {
+      "condition": "dqn_s43",
+      "seed": 102,
+      "captures": 356,
+      "frames": 4900,
+      "mean_pair_distance_over_side": 0.3739771107177208,
+      "all_frame_action_counts": [
+        0,
+        0,
+        0,
+        0,
+        200000
+      ]
+    }
+  ]
+}
