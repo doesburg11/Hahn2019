@@ -4,6 +4,7 @@ from copy import deepcopy
 from dataclasses import asdict
 import importlib.metadata
 import json
+import time
 from pathlib import Path
 import numpy as np
 import torch
@@ -31,10 +32,10 @@ def environment_config(path, algorithm):
     return EnvConfig(**{"neighbors": 5 if algorithm == "dqn" else 1, **overrides})
 
 
-def train(output, env_config, learn_config, steps, seed):
+def train(output, env_config, learn_config, steps, seed, progress_every=5000):
     """Sequential CPU training; PyTorch initialization/thread settings are global."""
-    if steps < 1:
-        raise ValueError("steps must be positive")
+    if steps < 1 or progress_every < 1:
+        raise ValueError("steps and progress_every must be positive")
     output = Path(output)
     output.mkdir(parents=True, exist_ok=False)
     torch.set_num_threads(1)
@@ -51,6 +52,7 @@ def train(output, env_config, learn_config, steps, seed):
     episode_steps, episode_return, broadcasts = 0, 0., 0
     records, losses = [], []
     initial_actor = {k: v.clone() for k, v in learner.actor.state_dict().items()}
+    started = time.monotonic()
     for step in range(1, steps+1):
         actions = learner.actions(observation, network=peers)
         actions[0] = learner.actions(observation[:1], explore=True)[0]
@@ -58,7 +60,12 @@ def train(output, env_config, learn_config, steps, seed):
         nxt, reward, terminated, truncated, info = env.step(turns)
         replay_next = info["terminal_observation"] if terminated else nxt[0]
         learner.replay.add(observation[0], actions[0], reward[0], replay_next, terminated)
-        loss = learner.update()
+        try:
+            loss = learner.update()
+        except FloatingPointError as error:
+            failure = {"step": step, "updates_completed": learner.updates, "error": str(error)}
+            (output/"failure.json").write_text(json.dumps(failure, indent=2)+"\n")
+            raise
         if loss:
             if not np.isfinite(list(loss.values())).all():
                 raise RuntimeError("non-finite training loss")
@@ -74,6 +81,19 @@ def train(output, env_config, learn_config, steps, seed):
             learner.reset_noise()
             observation = env.reset()
             episode_steps, episode_return = 0, 0.
+        if step % progress_every == 0 or step == steps:
+            elapsed = time.monotonic()-started
+            progress = {"step": step, "planned_steps": steps, "updates": learner.updates,
+                        "broadcasts": broadcasts, "elapsed_seconds": elapsed,
+                        "steps_per_second": step/elapsed, "last_loss": loss}
+            temporary = output/"progress.json.tmp"
+            temporary.write_text(json.dumps(progress, indent=2, allow_nan=False)+"\n")
+            temporary.replace(output/"progress.json")
+            checkpoint_meta = {**metadata, "steps": step, "planned_steps": steps}
+            temporary_checkpoint = output/"checkpoint_latest.pt.tmp"
+            torch.save({"actor": learner.actor.state_dict(), "metadata": checkpoint_meta}, temporary_checkpoint)
+            temporary_checkpoint.replace(output/"checkpoint_latest.pt")
+            print(f"step={step}/{steps} updates={learner.updates} speed={step/elapsed:.1f} steps/s", flush=True)
     nets = [learner.actor] + ([learner.critic] if learner.critic is not None else [])
     if not all(torch.isfinite(p).all() for net in nets for p in net.parameters()):
         raise RuntimeError("non-finite model parameters")
@@ -99,12 +119,15 @@ def main(argv=None):
     parser.add_argument("--target-interval", type=positive_int, default=1000)
     parser.add_argument("--tau", type=float, default=.005)
     parser.add_argument("--ddpg-action-units", choices=("degrees", "radians"), default="degrees")
+    parser.add_argument("--wrap-ddpg-actions", action="store_true", help="optional periodic-action stabilization variant")
+    parser.add_argument("--progress-every", type=positive_int, default=5000)
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args(argv)
     return train(args.output, environment_config(args.env_config, args.algorithm),
                  LearnConfig(algorithm=args.algorithm, warmup=args.warmup,
                              target_interval=args.target_interval, tau=args.tau,
-                             action_units=args.ddpg_action_units), args.steps, args.seed)
+                             action_units=args.ddpg_action_units, wrap_ddpg_actions=args.wrap_ddpg_actions),
+                 args.steps, args.seed, args.progress_every)
 
 
 if __name__ == "__main__":

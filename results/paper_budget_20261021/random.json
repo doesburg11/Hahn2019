@@ -1,0 +1,229 @@
+{
+  "condition": "random",
+  "environment": {
+    "n_prey": 40,
+    "neighbors": 5,
+    "side": 40.0,
+    "radius": 1.0,
+    "speed": 0.3,
+    "target_radius": 10.0,
+    "target_hold": 10,
+    "burst_period": 100,
+    "burst_duration": 10,
+    "burst_multiplier": 2.0,
+    "max_steps": 10000,
+    "confusion": true,
+    "pinned_predator": false
+  },
+  "training_metadata": null,
+  "episodes": [
+    {
+      "policy": "random",
+      "seed": 100,
+      "episode": 0,
+      "episode_length": 155,
+      "focal_return": -846.0,
+      "focal_caught": true,
+      "right_censored": false,
+      "captures_after_burnin": 5,
+      "frames_after_burnin": 55,
+      "captures_per_frame_after_burnin": 0.09090909090909091,
+      "metrics": {
+        "noise_angle_deviation_deg": 87.65612446516846,
+        "noise_pair_distance_over_side": 0.3881214235776401,
+        "polarization": 0.11899111802658545,
+        "mean_angle_deviation_deg": 81.25908257200527,
+        "mean_pair_distance_over_side": 0.3767887967553124,
+        "clusters": 4.5,
+        "noise_fraction": 0.5249999999999999,
+        "cluster_angle_deviation_deg": 60.44103778984142,
+        "cluster_pair_distance_over_side": 0.11115057115507967
+      }
+    },
+    {
+      "policy": "random",
+      "seed": 100,
+      "episode": 1,
+      "episode_length": 245,
+      "focal_return": -756.0,
+      "focal_caught": true,
+      "right_censored": false,
+      "captures_after_burnin": 8,
+      "frames_after_burnin": 145,
+      "captures_per_frame_after_burnin": 0.05517241379310345,
+      "metrics": {
+        "noise_angle_deviation_deg": 78.9026421283344,
+        "noise_pair_distance_over_side": 0.3825491300210682,
+        "polarization": 0.14620170337603053,
+        "mean_angle_deviation_deg": 79.30392161439345,
+        "mean_pair_distance_over_side": 0.368512808169134,
+        "clusters": 3.6666666666666665,
+        "noise_fraction": 0.5166666666666666,
+        "cluster_angle_deviation_deg": 62.42725662744406,
+        "cluster_pair_distance_over_side": 0.13420505855779152
+      }
+    },
+    {
+      "policy": "random",
+      "seed": 100,
+      "episode": 2,
+      "episode_length": 270,
+      "focal_return": -731.0,
+      "focal_caught": true,
+      "right_censored": false,
+      "captures_after_burnin": 10,
+      "frames_after_burnin": 170,
+      "captures_per_frame_after_burnin": 0.058823529411764705,
+      "metrics": {
+        "noise_angle_deviation_deg": 73.1668596825472,
+        "noise_pair_distance_over_side": 0.37674481494747514,
+        "polarization": 0.14046350969568566,
+        "mean_angle_deviation_deg": 79.84996731941665,
+        "mean_pair_distance_over_side": 0.37906288372137964,
+        "clusters": 5.75,
+        "noise_fraction": 0.48125,
+        "cluster_angle_deviation_deg": 58.21705394779566,
+        "cluster_pair_distance_over_side": 0.10042913559864666
+      }
+    },
+    {
+      "policy": "random",
+      "seed": 101,
+      "episode": 0,
+      "episode_length": 1,
+      "focal_return": -1000.0,
+      "focal_caught": true,
+      "right_censored": false,
+      "captures_after_burnin": 0,
+      "frames_after_burnin": 0,
+      "captures_per_frame_after_burnin": null,
+      "metrics": {}
+    },
+    {
+      "policy": "random",
+      "seed": 101,
+      "episode": 1,
+      "episode_length": 53,
+      "focal_return": -948.0,
+      "focal_caught": true,
+      "right_censored": false,
+      "captures_after_burnin": 0,
+      "frames_after_burnin": 0,
+      "captures_per_frame_after_burnin": null,
+      "metrics": {}
+    },
+    {
+      "policy": "random",
+      "seed": 101,
+      "episode": 2,
+      "episode_length": 975,
+      "focal_return": -26.0,
+      "focal_caught": true,
+      "right_censored": false,
+      "captures_after_burnin": 71,
+      "frames_after_burnin": 875,
+      "captures_per_frame_after_burnin": 0.08114285714285714,
+      "metrics": {
+        "noise_angle_deviation_deg": 73.74196510704672,
+        "noise_pair_distance_over_side": 0.38372979127383666,
+        "polarization": 0.13954144872759297,
+        "mean_angle_deviation_deg": 80.2024338118887,
+        "mean_pair_distance_over_side": 0.37992055541119124,
+        "clusters": 4.777777777777778,
+        "noise_fraction": 0.425,
+        "cluster_angle_deviation_deg": 59.48438026649733,
+        "cluster_pair_distance_over_side": 0.12003552374671515
+      }
+    },
+    {
+      "policy": "random",
+      "seed": 102,
+      "episode": 0,
+      "episode_length": 825,
+      "focal_return": -176.0,
+      "focal_caught": true,
+      "right_censored": false,
+      "captures_after_burnin": 41,
+      "frames_after_burnin": 725,
+      "captures_per_frame_after_burnin": 0.05655172413793103,
+      "metrics": {
+        "noise_angle_deviation_deg": 73.79358135194758,
+        "noise_pair_distance_over_side": 0.3833645015545242,
+        "polarization": 0.15396688076760148,
+        "mean_angle_deviation_deg": 78.59700436257249,
+        "mean_pair_distance_over_side": 0.3745030676595383,
+        "clusters": 4.2,
+        "noise_fraction": 0.47000000000000003,
+        "cluster_angle_deviation_deg": 59.19177874544119,
+        "cluster_pair_distance_over_side": 0.1271776116084336
+      }
+    },
+    {
+      "policy": "random",
+      "seed": 102,
+      "episode": 1,
+      "episode_length": 58,
+      "focal_return": -943.0,
+      "focal_caught": true,
+      "right_censored": false,
+      "captures_after_burnin": 0,
+      "frames_after_burnin": 0,
+      "captures_per_frame_after_burnin": null,
+      "metrics": {}
+    },
+    {
+      "policy": "random",
+      "seed": 102,
+      "episode": 2,
+      "episode_length": 501,
+      "focal_return": -500.0,
+      "focal_caught": true,
+      "right_censored": false,
+      "captures_after_burnin": 23,
+      "frames_after_burnin": 401,
+      "captures_per_frame_after_burnin": 0.057356608478802994,
+      "metrics": {
+        "noise_angle_deviation_deg": 69.8240714144798,
+        "noise_pair_distance_over_side": 0.3755472487938734,
+        "polarization": 0.19856378345111347,
+        "mean_angle_deviation_deg": 76.10571393548747,
+        "mean_pair_distance_over_side": 0.37277216421296333,
+        "clusters": 5.222222222222222,
+        "noise_fraction": 0.3916666666666666,
+        "cluster_angle_deviation_deg": 59.961085065746,
+        "cluster_pair_distance_over_side": 0.11572600368514332
+      }
+    }
+  ],
+  "population_rollouts": [
+    {
+      "policy": "random",
+      "seed": 100,
+      "captures": 298,
+      "frames": 4900,
+      "captures_per_frame": 0.060816326530612246
+    },
+    {
+      "policy": "random",
+      "seed": 101,
+      "captures": 308,
+      "frames": 4900,
+      "captures_per_frame": 0.06285714285714286
+    },
+    {
+      "policy": "random",
+      "seed": 102,
+      "captures": 301,
+      "frames": 4900,
+      "captures_per_frame": 0.06142857142857143
+    }
+  ],
+  "pooled_population_rates": {
+    "random": {
+      "captures": 907,
+      "frames": 14700,
+      "captures_per_frame": 0.06170068027210884
+    }
+  },
+  "elapsed_seconds": 4.905794276972301
+}

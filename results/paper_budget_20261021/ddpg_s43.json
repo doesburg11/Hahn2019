@@ -1,0 +1,271 @@
+{
+  "condition": "ddpg_s43",
+  "environment": {
+    "n_prey": 40,
+    "neighbors": 1,
+    "side": 40.0,
+    "radius": 1.0,
+    "speed": 0.3,
+    "target_radius": 10.0,
+    "target_hold": 10,
+    "burst_period": 100,
+    "burst_duration": 10,
+    "burst_multiplier": 2.0,
+    "max_steps": 10000,
+    "confusion": true,
+    "pinned_predator": false
+  },
+  "training_metadata": {
+    "environment": {
+      "n_prey": 10,
+      "neighbors": 1,
+      "side": 40.0,
+      "radius": 1.0,
+      "speed": 0.3,
+      "target_radius": 10.0,
+      "target_hold": 10,
+      "burst_period": 100,
+      "burst_duration": 10,
+      "burst_multiplier": 2.0,
+      "max_steps": 10000,
+      "confusion": true,
+      "pinned_predator": false
+    },
+    "learning": {
+      "algorithm": "ddpg",
+      "gamma": 0.999999,
+      "learning_rate": 0.001,
+      "warmup": 1000,
+      "target_interval": 1000,
+      "tau": 0.005,
+      "action_units": "degrees"
+    },
+    "seed": 43,
+    "steps": 500000,
+    "versions": {
+      "numpy": "2.4.6",
+      "torch": "2.14.1+cpu",
+      "matplotlib": "3.11.2"
+    }
+  },
+  "episodes": [
+    {
+      "policy": "ddpg_s43",
+      "seed": 100,
+      "episode": 0,
+      "episode_length": 41,
+      "focal_return": -960.0,
+      "focal_caught": true,
+      "right_censored": false,
+      "captures_after_burnin": 0,
+      "frames_after_burnin": 0,
+      "captures_per_frame_after_burnin": null,
+      "metrics": {}
+    },
+    {
+      "policy": "ddpg_s43",
+      "seed": 100,
+      "episode": 1,
+      "episode_length": 4407,
+      "focal_return": 3406.0,
+      "focal_caught": true,
+      "right_censored": false,
+      "captures_after_burnin": 273,
+      "frames_after_burnin": 4307,
+      "captures_per_frame_after_burnin": 0.0633851869050383,
+      "metrics": {
+        "noise_angle_deviation_deg": 74.51805922870902,
+        "noise_pair_distance_over_side": 0.38106099810803085,
+        "polarization": 0.13796090827217228,
+        "mean_angle_deviation_deg": 79.91936809994911,
+        "mean_pair_distance_over_side": 0.37465195020225683,
+        "clusters": 4.586206896551724,
+        "noise_fraction": 0.45316091954022986,
+        "cluster_angle_deviation_deg": 59.13894049291378,
+        "cluster_pair_distance_over_side": 0.12228571546192292
+      }
+    },
+    {
+      "policy": "ddpg_s43",
+      "seed": 100,
+      "episode": 2,
+      "episode_length": 287,
+      "focal_return": -714.0,
+      "focal_caught": true,
+      "right_censored": false,
+      "captures_after_burnin": 10,
+      "frames_after_burnin": 187,
+      "captures_per_frame_after_burnin": 0.053475935828877004,
+      "metrics": {
+        "noise_angle_deviation_deg": 76.04832630001508,
+        "noise_pair_distance_over_side": 0.3791579686348322,
+        "polarization": 0.13406821949827152,
+        "mean_angle_deviation_deg": 81.28919681315028,
+        "mean_pair_distance_over_side": 0.37064326368820744,
+        "clusters": 3.25,
+        "noise_fraction": 0.47500000000000003,
+        "cluster_angle_deviation_deg": 69.60896753417988,
+        "cluster_pair_distance_over_side": 0.12604913255440942
+      }
+    },
+    {
+      "policy": "ddpg_s43",
+      "seed": 101,
+      "episode": 0,
+      "episode_length": 1,
+      "focal_return": -1000.0,
+      "focal_caught": true,
+      "right_censored": false,
+      "captures_after_burnin": 0,
+      "frames_after_burnin": 0,
+      "captures_per_frame_after_burnin": null,
+      "metrics": {}
+    },
+    {
+      "policy": "ddpg_s43",
+      "seed": 101,
+      "episode": 1,
+      "episode_length": 638,
+      "focal_return": -363.0,
+      "focal_caught": true,
+      "right_censored": false,
+      "captures_after_burnin": 40,
+      "frames_after_burnin": 538,
+      "captures_per_frame_after_burnin": 0.07434944237918216,
+      "metrics": {
+        "noise_angle_deviation_deg": 72.32635137671129,
+        "noise_pair_distance_over_side": 0.3787158748978346,
+        "polarization": 0.1492133592747267,
+        "mean_angle_deviation_deg": 79.1764080113533,
+        "mean_pair_distance_over_side": 0.3784141469647155,
+        "clusters": 4.545454545454546,
+        "noise_fraction": 0.47500000000000003,
+        "cluster_angle_deviation_deg": 54.435995530922355,
+        "cluster_pair_distance_over_side": 0.11038583511482113
+      }
+    },
+    {
+      "policy": "ddpg_s43",
+      "seed": 101,
+      "episode": 2,
+      "episode_length": 287,
+      "focal_return": -714.0,
+      "focal_caught": true,
+      "right_censored": false,
+      "captures_after_burnin": 8,
+      "frames_after_burnin": 187,
+      "captures_per_frame_after_burnin": 0.0427807486631016,
+      "metrics": {
+        "noise_angle_deviation_deg": 75.88134388126,
+        "noise_pair_distance_over_side": 0.3781910962190913,
+        "polarization": 0.09761436190644207,
+        "mean_angle_deviation_deg": 82.75816526548378,
+        "mean_pair_distance_over_side": 0.3844349200799545,
+        "clusters": 5.25,
+        "noise_fraction": 0.5375,
+        "cluster_angle_deviation_deg": 50.68838779992788,
+        "cluster_pair_distance_over_side": 0.1019412079479502
+      }
+    },
+    {
+      "policy": "ddpg_s43",
+      "seed": 102,
+      "episode": 0,
+      "episode_length": 510,
+      "focal_return": -491.0,
+      "focal_caught": true,
+      "right_censored": false,
+      "captures_after_burnin": 32,
+      "frames_after_burnin": 410,
+      "captures_per_frame_after_burnin": 0.07804878048780488,
+      "metrics": {
+        "noise_angle_deviation_deg": 78.62891722690838,
+        "noise_pair_distance_over_side": 0.37875608254093895,
+        "polarization": 0.1366946754490654,
+        "mean_angle_deviation_deg": 80.26799024781988,
+        "mean_pair_distance_over_side": 0.3748859487441023,
+        "clusters": 4.555555555555555,
+        "noise_fraction": 0.5194444444444444,
+        "cluster_angle_deviation_deg": 59.125273413932504,
+        "cluster_pair_distance_over_side": 0.10829808743038183
+      }
+    },
+    {
+      "policy": "ddpg_s43",
+      "seed": 102,
+      "episode": 1,
+      "episode_length": 1593,
+      "focal_return": 592.0,
+      "focal_caught": true,
+      "right_censored": false,
+      "captures_after_burnin": 86,
+      "frames_after_burnin": 1493,
+      "captures_per_frame_after_burnin": 0.05760214333556597,
+      "metrics": {
+        "noise_angle_deviation_deg": 76.75278730052933,
+        "noise_pair_distance_over_side": 0.38126797576374527,
+        "polarization": 0.13259342751227296,
+        "mean_angle_deviation_deg": 80.58361976255668,
+        "mean_pair_distance_over_side": 0.37718391290467923,
+        "clusters": 4.333333333333333,
+        "noise_fraction": 0.515,
+        "cluster_angle_deviation_deg": 59.4699555712333,
+        "cluster_pair_distance_over_side": 0.11235526905802186
+      }
+    },
+    {
+      "policy": "ddpg_s43",
+      "seed": 102,
+      "episode": 2,
+      "episode_length": 666,
+      "focal_return": -335.0,
+      "focal_caught": true,
+      "right_censored": false,
+      "captures_after_burnin": 39,
+      "frames_after_burnin": 566,
+      "captures_per_frame_after_burnin": 0.06890459363957598,
+      "metrics": {
+        "noise_angle_deviation_deg": 77.24373353959231,
+        "noise_pair_distance_over_side": 0.3793620652092053,
+        "polarization": 0.1439457128888914,
+        "mean_angle_deviation_deg": 79.16391131335476,
+        "mean_pair_distance_over_side": 0.368852471096428,
+        "clusters": 4.5,
+        "noise_fraction": 0.4229166666666666,
+        "cluster_angle_deviation_deg": 58.7393697227404,
+        "cluster_pair_distance_over_side": 0.1258165195138233
+      }
+    }
+  ],
+  "population_rollouts": [
+    {
+      "policy": "ddpg_s43",
+      "seed": 100,
+      "captures": 316,
+      "frames": 4900,
+      "captures_per_frame": 0.06448979591836734
+    },
+    {
+      "policy": "ddpg_s43",
+      "seed": 101,
+      "captures": 297,
+      "frames": 4900,
+      "captures_per_frame": 0.06061224489795918
+    },
+    {
+      "policy": "ddpg_s43",
+      "seed": 102,
+      "captures": 316,
+      "frames": 4900,
+      "captures_per_frame": 0.06448979591836734
+    }
+  ],
+  "pooled_population_rates": {
+    "ddpg_s43": {
+      "captures": 929,
+      "frames": 14700,
+      "captures_per_frame": 0.06319727891156462
+    }
+  },
+  "elapsed_seconds": 9.699958491022699
+}

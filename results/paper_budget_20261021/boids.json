@@ -1,0 +1,249 @@
+{
+  "condition": "boids",
+  "environment": {
+    "n_prey": 40,
+    "neighbors": 5,
+    "side": 40.0,
+    "radius": 1.0,
+    "speed": 0.3,
+    "target_radius": 10.0,
+    "target_hold": 10,
+    "burst_period": 100,
+    "burst_duration": 10,
+    "burst_multiplier": 2.0,
+    "max_steps": 10000,
+    "confusion": true,
+    "pinned_predator": false
+  },
+  "training_metadata": null,
+  "episodes": [
+    {
+      "policy": "boids",
+      "seed": 100,
+      "episode": 0,
+      "episode_length": 10000,
+      "focal_return": 10000.0,
+      "focal_caught": false,
+      "right_censored": true,
+      "captures_after_burnin": 34,
+      "frames_after_burnin": 9900,
+      "captures_per_frame_after_burnin": 0.0034343434343434343,
+      "metrics": {
+        "noise_angle_deviation_deg": 25.978523899004486,
+        "noise_pair_distance_over_side": 0.34302517087366463,
+        "polarization": 0.7836587095115821,
+        "mean_angle_deviation_deg": 31.031509450629006,
+        "mean_pair_distance_over_side": 0.2739017000307809,
+        "clusters": 1.0404040404040404,
+        "noise_fraction": 0.08775252525252525,
+        "cluster_angle_deviation_deg": 30.86751785151994,
+        "cluster_pair_distance_over_side": 0.2466898598534548
+      }
+    },
+    {
+      "policy": "boids",
+      "seed": 100,
+      "episode": 1,
+      "episode_length": 10000,
+      "focal_return": 10000.0,
+      "focal_caught": false,
+      "right_censored": true,
+      "captures_after_burnin": 36,
+      "frames_after_burnin": 9900,
+      "captures_per_frame_after_burnin": 0.0036363636363636364,
+      "metrics": {
+        "noise_angle_deviation_deg": 28.452409829534478,
+        "noise_pair_distance_over_side": 0.3711556433277546,
+        "polarization": 0.7854791424878794,
+        "mean_angle_deviation_deg": 31.24271521209326,
+        "mean_pair_distance_over_side": 0.27545532207359347,
+        "clusters": 1.0151515151515151,
+        "noise_fraction": 0.0845959595959596,
+        "cluster_angle_deviation_deg": 31.053105332933086,
+        "cluster_pair_distance_over_side": 0.25025614935330237
+      }
+    },
+    {
+      "policy": "boids",
+      "seed": 100,
+      "episode": 2,
+      "episode_length": 10000,
+      "focal_return": 10000.0,
+      "focal_caught": false,
+      "right_censored": true,
+      "captures_after_burnin": 32,
+      "frames_after_burnin": 9900,
+      "captures_per_frame_after_burnin": 0.0032323232323232323,
+      "metrics": {
+        "noise_angle_deviation_deg": 23.943207870807377,
+        "noise_pair_distance_over_side": 0.35101482297352515,
+        "polarization": 0.7802312529600465,
+        "mean_angle_deviation_deg": 31.18943616836996,
+        "mean_pair_distance_over_side": 0.27223853790138325,
+        "clusters": 1.0252525252525253,
+        "noise_fraction": 0.07714646464646464,
+        "cluster_angle_deviation_deg": 31.186387887294302,
+        "cluster_pair_distance_over_side": 0.24847733503759217
+      }
+    },
+    {
+      "policy": "boids",
+      "seed": 101,
+      "episode": 0,
+      "episode_length": 1,
+      "focal_return": -1000.0,
+      "focal_caught": true,
+      "right_censored": false,
+      "captures_after_burnin": 0,
+      "frames_after_burnin": 0,
+      "captures_per_frame_after_burnin": null,
+      "metrics": {}
+    },
+    {
+      "policy": "boids",
+      "seed": 101,
+      "episode": 1,
+      "episode_length": 10000,
+      "focal_return": 10000.0,
+      "focal_caught": false,
+      "right_censored": true,
+      "captures_after_burnin": 32,
+      "frames_after_burnin": 9900,
+      "captures_per_frame_after_burnin": 0.0032323232323232323,
+      "metrics": {
+        "noise_angle_deviation_deg": 29.15082531042037,
+        "noise_pair_distance_over_side": 0.3753581797790996,
+        "polarization": 0.7841280975268617,
+        "mean_angle_deviation_deg": 31.203851992337682,
+        "mean_pair_distance_over_side": 0.27359712329314057,
+        "clusters": 1.0151515151515151,
+        "noise_fraction": 0.08194444444444443,
+        "cluster_angle_deviation_deg": 30.984221033422333,
+        "cluster_pair_distance_over_side": 0.24937578727014645
+      }
+    },
+    {
+      "policy": "boids",
+      "seed": 101,
+      "episode": 2,
+      "episode_length": 10000,
+      "focal_return": 10000.0,
+      "focal_caught": false,
+      "right_censored": true,
+      "captures_after_burnin": 30,
+      "frames_after_burnin": 9900,
+      "captures_per_frame_after_burnin": 0.0030303030303030303,
+      "metrics": {
+        "noise_angle_deviation_deg": 27.149032874458666,
+        "noise_pair_distance_over_side": 0.3655752465235996,
+        "polarization": 0.7794575865277468,
+        "mean_angle_deviation_deg": 31.535256155274308,
+        "mean_pair_distance_over_side": 0.272110987019668,
+        "clusters": 1.0303030303030303,
+        "noise_fraction": 0.07866161616161615,
+        "cluster_angle_deviation_deg": 31.559640977728215,
+        "cluster_pair_distance_over_side": 0.24791738332048943
+      }
+    },
+    {
+      "policy": "boids",
+      "seed": 102,
+      "episode": 0,
+      "episode_length": 10000,
+      "focal_return": 10000.0,
+      "focal_caught": false,
+      "right_censored": true,
+      "captures_after_burnin": 31,
+      "frames_after_burnin": 9900,
+      "captures_per_frame_after_burnin": 0.0031313131313131315,
+      "metrics": {
+        "noise_angle_deviation_deg": 25.264677458642765,
+        "noise_pair_distance_over_side": 0.3585587302163762,
+        "polarization": 0.7752670025774046,
+        "mean_angle_deviation_deg": 31.538377608961696,
+        "mean_pair_distance_over_side": 0.2703504595574464,
+        "clusters": 1.0101010101010102,
+        "noise_fraction": 0.07790404040404039,
+        "cluster_angle_deviation_deg": 31.576054790287785,
+        "cluster_pair_distance_over_side": 0.24621714391874372
+      }
+    },
+    {
+      "policy": "boids",
+      "seed": 102,
+      "episode": 1,
+      "episode_length": 804,
+      "focal_return": -197.0,
+      "focal_caught": true,
+      "right_censored": false,
+      "captures_after_burnin": 4,
+      "frames_after_burnin": 704,
+      "captures_per_frame_after_burnin": 0.005681818181818182,
+      "metrics": {
+        "noise_angle_deviation_deg": 22.66058632787057,
+        "noise_pair_distance_over_side": 0.3544024929394941,
+        "polarization": 0.7902746024285177,
+        "mean_angle_deviation_deg": 30.162714548563947,
+        "mean_pair_distance_over_side": 0.2776085659089666,
+        "clusters": 1.0,
+        "noise_fraction": 0.09666666666666665,
+        "cluster_angle_deviation_deg": 30.476959943810098,
+        "cluster_pair_distance_over_side": 0.24982167524215562
+      }
+    },
+    {
+      "policy": "boids",
+      "seed": 102,
+      "episode": 2,
+      "episode_length": 8602,
+      "focal_return": 7601.0,
+      "focal_caught": true,
+      "right_censored": false,
+      "captures_after_burnin": 24,
+      "frames_after_burnin": 8502,
+      "captures_per_frame_after_burnin": 0.0028228652081863093,
+      "metrics": {
+        "noise_angle_deviation_deg": 25.83898720420418,
+        "noise_pair_distance_over_side": 0.3773332585582587,
+        "polarization": 0.7798726611771152,
+        "mean_angle_deviation_deg": 31.64700834253783,
+        "mean_pair_distance_over_side": 0.2721952095408671,
+        "clusters": 1.023391812865497,
+        "noise_fraction": 0.0804093567251462,
+        "cluster_angle_deviation_deg": 31.583247315354757,
+        "cluster_pair_distance_over_side": 0.24793107511372975
+      }
+    }
+  ],
+  "population_rollouts": [
+    {
+      "policy": "boids",
+      "seed": 100,
+      "captures": 17,
+      "frames": 4900,
+      "captures_per_frame": 0.0034693877551020408
+    },
+    {
+      "policy": "boids",
+      "seed": 101,
+      "captures": 13,
+      "frames": 4900,
+      "captures_per_frame": 0.002653061224489796
+    },
+    {
+      "policy": "boids",
+      "seed": 102,
+      "captures": 16,
+      "frames": 4900,
+      "captures_per_frame": 0.0032653061224489797
+    }
+  ],
+  "pooled_population_rates": {
+    "boids": {
+      "captures": 46,
+      "frames": 14700,
+      "captures_per_frame": 0.003129251700680272
+    }
+  },
+  "elapsed_seconds": 37.434104700922035
+}

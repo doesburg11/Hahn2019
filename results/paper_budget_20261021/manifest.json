@@ -1,0 +1,22 @@
+{
+  "evaluation_seeds": [
+    100,
+    101,
+    102
+  ],
+  "episodes_per_seed": 3,
+  "horizon": 10000,
+  "burnin": 100,
+  "sample_every": 50,
+  "population_frames": 5000,
+  "conditions": [
+    "random",
+    "turnaway",
+    "boids",
+    "dqn_s42",
+    "dqn_s43",
+    "ddpg_s43"
+  ],
+  "source_commit": "5b66d17",
+  "method": "original unwrapped reconstruction; no stabilization applied to these policies"
+}

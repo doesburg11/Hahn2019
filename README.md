@@ -59,6 +59,16 @@ The primary paper was read directly, including visual inspection of Table 1. [ME
 
 [RESULTS.md](RESULTS.md) records executed checks and the independent Codex review. No claim that learned flocking, the published figures, the proposed equilibrium explanation, or superior survival has been reproduced follows from passing tests or short runs. The paper itself presents the equilibrium explanation as a hypothesis.
 
+## Optional DDPG stabilization and progress
+
+The unwrapped seed-42 DDPG run diverged during full-budget training. `--wrap-ddpg-actions` selects an **experimental stabilization variant**: behavior, replay and every critic input use angles in [-180°, 180°), or [-pi, pi) for radian actions. The actor head stays linear and gradients pass through the wrap except at its discontinuities. This changes optimization, so wrapped results must be reported separately from the original reconstruction. The default remains unwrapped for compatibility.
+
+```bash
+python train.py --algorithm ddpg --steps 500000 --seed 42 --wrap-ddpg-actions --env-config configs/assumed_environment.json --output output/ddpg_wrapped_s42
+```
+
+Numerical guards reject non-finite losses/gradients before each optimizer step. Training writes `progress.json` and `checkpoint_latest.pt` every 5,000 steps (configurable with `--progress-every`). Inference checkpoint metadata records actual completed steps separately from the planned budget. These are inference snapshots, not optimizer/replay resume checkpoints. A numerical failure writes `failure.json`; an earlier complete snapshot remains available. A DDPG critic update may have succeeded before a subsequent actor update fails; the process stops rather than attempting to continue partially updated training.
+
 ## Smoke-run preview
 
 ![DQN smoke run, 1200 training steps](assets/dqn_smoke.gif)

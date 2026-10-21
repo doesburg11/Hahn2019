@@ -13,7 +13,7 @@ from hahn2019.policies import baseline_turns
 from train import positive_int, seed_int
 
 
-def evaluate(env_config, policy, seeds, episodes, burnin=100, sample_every=10, actor=None, algorithm=None, action_units="degrees"):
+def evaluate(env_config, policy, seeds, episodes, burnin=100, sample_every=10, actor=None, algorithm=None, action_units="degrees", wrap_ddpg_actions=False):
     rows = []
     for seed in seeds:
         for episode in range(episodes):
@@ -33,7 +33,7 @@ def evaluate(env_config, policy, seeds, episodes, burnin=100, sample_every=10, a
                     with torch.no_grad():
                         output = actor(torch.from_numpy(env.observe())).numpy()
                     turns = actions_to_turns(output.argmax(1) if algorithm == "dqn" else output[:, 0],
-                                             LearnConfig(algorithm=algorithm, action_units=action_units))
+                                             LearnConfig(algorithm=algorithm, action_units=action_units, wrap_ddpg_actions=wrap_ddpg_actions))
                 _, rewards, terminated, truncated, info = env.step(turns)
                 total_return += float(rewards[0])
                 if env.steps > burnin:
@@ -54,7 +54,7 @@ def evaluate(env_config, policy, seeds, episodes, burnin=100, sample_every=10, a
     return rows
 
 
-def population_capture(env_config, policy, seeds, frames, burnin=100, actor=None, algorithm=None, action_units="degrees"):
+def population_capture(env_config, policy, seeds, frames, burnin=100, actor=None, algorithm=None, action_units="degrees", wrap_ddpg_actions=False):
     rows = []
     for seed in seeds:
         env = Swarm(env_config, np.random.SeedSequence([seed, 991]))
@@ -67,7 +67,7 @@ def population_capture(env_config, policy, seeds, frames, burnin=100, actor=None
                 with torch.no_grad():
                     output = actor(torch.from_numpy(env.observe())).numpy()
                 turns = actions_to_turns(output.argmax(1) if algorithm == "dqn" else output[:, 0],
-                                         LearnConfig(algorithm=algorithm, action_units=action_units))
+                                         LearnConfig(algorithm=algorithm, action_units=action_units, wrap_ddpg_actions=wrap_ddpg_actions))
             _, _, _, _, info = env.step(turns, focal_episode=False)
             if frame >= burnin:
                 captures += int(info["caught"].sum())
@@ -122,11 +122,12 @@ def main(argv=None):
     args.output.mkdir(parents=True, exist_ok=False)
     rows, population_rows = [], []
     action_units = lc.action_units if actor is not None else "degrees"
+    wrap_ddpg_actions = lc.wrap_ddpg_actions if actor is not None else False
     for policy in ["random", "turnaway", "boids"] + ([algorithm] if actor is not None else []):
         rows.extend(evaluate(config, policy, args.seeds, args.episodes, args.burnin, args.sample_every,
-                             actor if policy == algorithm else None, algorithm, action_units))
+                             actor if policy == algorithm else None, algorithm, action_units, wrap_ddpg_actions))
         population_rows.extend(population_capture(config, policy, args.seeds, args.population_frames, args.burnin,
-                                                  actor if policy == algorithm else None, algorithm, action_units))
+                                                  actor if policy == algorithm else None, algorithm, action_units, wrap_ddpg_actions))
     result = {"environment": asdict(config), "burnin": args.burnin, "sample_every": args.sample_every,
               "checkpoint": str(args.checkpoint) if args.checkpoint else None,
               "training_metadata": source["metadata"] if source else None, "episodes": rows,

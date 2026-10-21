@@ -22,6 +22,7 @@ class LearnConfig:
     warmup: int = 1000                 # Unreported in paper; reconstruction choice.
     target_interval: int = 1000        # DQN hard-copy interval, unreported.
     tau: float = .005                  # DDPG target interpolation, unreported.
+    wrap_ddpg_actions: bool = False    # Optional periodic-action stabilization variant.
     action_units: str = "degrees"      # Paper describes DDPG turns as real-valued degrees.
 
     def __post_init__(self):
@@ -57,6 +58,28 @@ class Replay:
         ids = rng.choice(self.size, batch_size, replace=False)
         return tuple(torch.from_numpy(a[ids]) for a in
                      (self.obs, self.actions, self.rewards, self.next_obs, self.terminated))
+
+
+def canonical_action(actions, config):
+    """Optional critic-consistent canonical angle; gradient is 1 off wrap cuts."""
+    if not config.wrap_ddpg_actions:
+        return actions
+    half_period = 180. if config.action_units == "degrees" else np.pi
+    return (actions + half_period) % (2*half_period) - half_period
+
+
+def optimizer_step(loss, optimizer, parameters):
+    """Reject non-finite losses/gradients before mutating optimizer state."""
+    parameters = list(parameters)
+    if not torch.isfinite(loss).all():
+        raise FloatingPointError("non-finite loss before optimizer step")
+    optimizer.zero_grad()
+    loss.backward()
+    if any(p.grad is not None and not torch.isfinite(p.grad).all() for p in parameters):
+        raise FloatingPointError("non-finite gradient before optimizer step")
+    optimizer.step()
+    if any(not torch.isfinite(p).all() for p in parameters):
+        raise FloatingPointError("non-finite parameter after optimizer step")
 
 
 def bellman_target(reward, terminated, next_value, gamma):
@@ -101,7 +124,7 @@ class Learner:
             self.ou_state += .15 * (-self.ou_state) + .3 * self.rng.normal()
             actions += self.ou_state
         # Linear actor; any real turn is legal and periodic. No tanh/clipping.
-        return actions
+        return canonical_action(actions, self.config)
 
     def update(self):
         c = self.config
@@ -112,29 +135,27 @@ class Learner:
             with torch.no_grad():
                 targets = bellman_target(rewards, terminal, self.target_actor(nxt).max(1, keepdim=True).values, c.gamma)
             loss = nn.functional.mse_loss(self.actor(obs).gather(1, actions.long()), targets)
-            self.actor_optimizer.zero_grad()
-            loss.backward()
-            self.actor_optimizer.step()
+            optimizer_step(loss, self.actor_optimizer, self.actor.parameters())
             self.updates += 1
             if self.updates % c.target_interval == 0:
                 self.target_actor.load_state_dict(self.actor.state_dict())
             return {"critic_loss": float(loss.detach())}
         with torch.no_grad():
-            next_q = self.target_critic(torch.cat([nxt, self.target_actor(nxt)], dim=1))
+            next_q = self.target_critic(torch.cat([nxt, canonical_action(self.target_actor(nxt), c)], dim=1))
             targets = bellman_target(rewards, terminal, next_q, c.gamma)
-        q = self.critic(torch.cat([obs, actions], dim=1))
+        q = self.critic(torch.cat([obs, canonical_action(actions, c)], dim=1))
         critic_loss = nn.functional.mse_loss(q, targets)
-        self.critic_optimizer.zero_grad()
-        critic_loss.backward()
-        self.critic_optimizer.step()
-        for p in self.critic.parameters():
+        optimizer_step(critic_loss, self.critic_optimizer, self.critic.parameters())
+        critic_parameters = list(self.critic.parameters())
+        prior_grad_flags = [p.requires_grad for p in critic_parameters]
+        for p in critic_parameters:
             p.requires_grad_(False)
-        actor_loss = -self.critic(torch.cat([obs, self.actor(obs)], dim=1)).mean()
-        self.actor_optimizer.zero_grad()
-        actor_loss.backward()
-        self.actor_optimizer.step()
-        for p in self.critic.parameters():
-            p.requires_grad_(True)
+        try:
+            actor_loss = -self.critic(torch.cat([obs, canonical_action(self.actor(obs), c)], dim=1)).mean()
+            optimizer_step(actor_loss, self.actor_optimizer, self.actor.parameters())
+        finally:
+            for p, requires_grad in zip(critic_parameters, prior_grad_flags):
+                p.requires_grad_(requires_grad)
         with torch.no_grad():
             for target, online in [(self.target_actor, self.actor), (self.target_critic, self.critic)]:
                 for t, p in zip(target.parameters(), online.parameters()):
@@ -148,4 +169,5 @@ def actions_to_turns(actions, config):
     from .environment import TURNS
     if config.algorithm == "dqn":
         return TURNS[actions]
+    actions = canonical_action(actions, config)
     return np.deg2rad(actions) if config.action_units == "degrees" else np.asarray(actions)

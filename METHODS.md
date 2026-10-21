@@ -64,3 +64,12 @@ Evaluation starts the focal prey's episode from independently seeded random stat
 For stronger claims, compare independent training seeds, report the distribution of per-seed effects, inspect censoring, sweep ecology/DBSCAN settings, retrain with confusion disabled, and test the pinned-predator diagnostic. Continuous population capture measurements use separately seeded fixed-duration rollouts (1,000 frames by default via `--population-frames`) that respawn focal prey and continue after its death. Report both per-rollout counts/exposure and the pooled ratio sum(captures)/sum(frames), never an unweighted mean of episode ratios. Focal-life episode rates remain labeled diagnostics. Noise-point distance and angular statistics are also reported separately.
 
 The density-before-death KDE plot and a tuned Boids search from the paper are not implemented. Full numerical replication remains open.
+
+
+## Post-run numerical stabilization variant (2026-10-21)
+
+The original unwrapped seed-42 DDPG experiment reproducibly overflowed after 65,235 environment steps in an instrumented rerun, with replay actions around 6.5e14 degrees. This supports the previously noted periodic-action/critic-extrapolation concern; it does not identify the authors' unreported implementation choices.
+
+An optional `wrap_ddpg_actions` setting, default false, maps degree actions to [-180,180) and radian actions to [-pi,pi). It is applied after exploration, before replay consumption, to target-actor actions, to actor actions inside the critic loss used for policy optimization, and at evaluation/rendering boundaries. The derivative through modulo is one away from wrap cuts. It bounds the critic's action coordinate without replacing the linear head, but leaves discontinuities and unbounded raw actor parameters. Long-run stability and scientific equivalence are not assumed.
+
+Finite loss/gradient guards operate per optimizer step and stop training on failure; they do not roll back a preceding successful critic step if the actor subsequently fails. Critic trainability flags are restored exactly after the actor step, including on failure. Progress/checkpoint files are atomically replaced; they support inspection and inference, not full training resume. Original training results and stabilized variants are kept separate.

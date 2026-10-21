@@ -1,6 +1,44 @@
 # Validation and results
 
-This log distinguishes execution checks from scientific reproduction. No full-budget reproduction or emergent-flocking claim has been established. An animation is not evidence that grouping was learned; aligned escape from a common predator is also insufficient evidence of active cohesion.
+This log distinguishes execution checks from scientific reproduction. Full-budget runs are evaluated below; an emergent-flocking reproduction has not been established. An animation is not evidence that grouping was learned; aligned escape from a common predator is also insufficient evidence of active cohesion.
+
+## Full-budget runs and held-out evaluation — 2026-10-21
+
+The original DQN seeds 42/43 and DDPG seed 43 completed 500,000 environment steps and 499,001 optimizer updates each. DDPG seed 42 failed. These runs used the 10,000-frame episode cap and the documented assumed ecology; they remain approximate reconstructions.
+
+Evaluation used 40 prey, held-out seeds 100/101/102, three focal episodes per seed, the 10,000-frame horizon, 100-frame burn-in and metrics sampled every 50 frames. Population rates use independent 5,000-frame continuous rollouts per seed, with 14,700 total measured frames per condition. Controls are evaluated once and shared, not counted as repeated independent replications. Raw records are tracked in [results/paper_budget_20261021](results/paper_budget_20261021).
+
+| Policy | Mean focal frames (capped) | Censored lives / 9 | Population captures / frames | Captures per frame |
+| --- | --- | --- | --- | --- |
+| random | 342.6 | 0/9 | 907/14700 | 0.06170 |
+| turnaway | 8889.0 | 8/9 | 33/14700 | 0.00224 |
+| boids | 7711.9 | 6/9 | 46/14700 | 0.00313 |
+| dqn_s42 | 8889.0 | 8/9 | 24/14700 | 0.00163 |
+| dqn_s43 | 439.3 | 0/9 | 984/14700 | 0.06694 |
+| ddpg_s43 | 936.7 | 0/9 | 929/14700 | 0.06320 |
+
+DQN seed 42 survived well under these settings, but the other learned runs did not replicate that result. Its apparent advantage in population capture rate over TurnAway is only a small observed count difference across three evaluation seeds, not an established statistically significant improvement. Eight of nine focal lives for both DQN seed 42 and TurnAway were censored at the horizon, so their equal capped mean is not a measured uncensored life expectancy.
+
+The grouping diagnostics do not establish the paper's learned-flocking result. Descriptive means of per-episode post-burn-in metrics give DQN seed 42 polarization 0.339 and normalized mean pair distance 0.323, versus TurnAway 0.654/0.137 and random 0.150/0.375. DQN seed 43 and DDPG seed 43 pair distances (0.379 and 0.376) resemble random. These measures alone cannot distinguish active social attraction from shared predator avoidance, and episodes have different observation durations.
+
+### DDPG failure diagnosis and stabilization
+
+An instrumented rerun of the unchanged seed-42 DDPG method reproduced the overflow at **65,235 environment steps** (64,236 completed update calls). Maximum stored action magnitude was about **6.55e14 degrees**. Because full turns are physically equivalent but the unwrapped critic sees different large numeric inputs, this supports the action-representation/extrapolation diagnosis. Seed 43 completed, but one sampled batch from its final actor still produced turns around -165,000 to -237,000 degrees. Completion alone therefore does not demonstrate a well-conditioned controller.
+
+An optional wrapped-angle variant was added, preserving the original default and checkpoints. A seed-42 preflight completed 30,000 steps and 29,001 updates with finite losses/parameters, ending at critic loss 89,399 and actor loss -4,270. This is evidence that the probe executes, not a guarantee of full-budget stability. Two new 500,000-step background runs (seeds 42/43) are planned/launched with `--wrap-ddpg-actions`; their results must remain separate from the original unwrapped method. No wrapped full-budget outcome is claimed yet.
+
+New runs write progress, last complete inference snapshots and structured numerical failure information. The finite guards do not roll back an already successful critic step if a later actor step fails. They stop the process and preserve the earlier snapshot rather than continuing with a partially updated model.
+
+### Review and regression checks
+
+The independent Codex review confirmed canonicalization across behavior/replay/critic/evaluation/rendering, legacy default compatibility, pre-optimizer finite guards and actual-versus-planned checkpoint metadata. It found that critic trainability flags were restored unconditionally rather than to their prior values; this was corrected and tested. Suggested coverage for old checkpoints, canonical replay insertion, partial checkpoint metadata and actor-failure restoration was added. The primary assessment agrees with these findings. The final suite passes **34 tests**; the 30,000-step preflight also completed.
+
+Reproduction commands (choose new output paths):
+
+```bash
+python evaluate.py --checkpoint output/paper_budget_20261020_235544/dqn_s42/policy.pt --n-prey 40 --seeds 100 101 102 --episodes 3 --max-steps 10000 --burnin 100 --sample-every 50 --population-frames 5000 --output output/dqn_s42_heldout_recheck
+python train.py --algorithm ddpg --steps 500000 --seed 42 --wrap-ddpg-actions --env-config configs/assumed_environment.json --output output/ddpg_wrapped_s42
+```
 
 ## Verified on 2026-10-20
 
