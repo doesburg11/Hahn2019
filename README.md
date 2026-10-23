@@ -63,6 +63,24 @@ The primary paper was read directly, including visual inspection of Table 1. [ME
 
 [RESULTS.md](RESULTS.md) records executed checks and the independent Codex review. No claim that learned flocking, the published figures, the proposed equilibrium explanation, or superior survival has been reproduced follows from passing tests or short runs. The paper itself presents the equilibrium explanation as a hypothesis.
 
+## Second implementation and the Nash test (removed from PredPreyGrass)
+
+A separate, independently written implementation of the same paper briefly
+lived in PredPreyGrass as `predpreygrass/non_evolutionary/continuous_space/selfish_flocking`
+(2026-10-22) and was removed there as a duplicate of this repository. Its
+results agree with this one: 1 of 5 DQN seeds learned clearly, TurnAway
+survived longest, and grouping was matched by TurnAway, which ignores other
+prey. It added one test this repository does not have: the mixed
+TurnAway/SELFish population test of Hahn et al. (ICAART 2020), *Nash
+Equilibria in Multi-Agent Swarms*. At the paper's exposure (10 episodes ×
+100,000 frames per split, one learned checkpoint) the only pure equilibrium
+was all-TurnAway; the paper's (0, 10) and (7, 3) did not replicate. Caught
+prey respawned at random, not at the densest spot, and the predator settings
+were assumptions. Code and full tables: PredPreyGrass commit
+[`5ae60b4`](https://github.com/doesburg11/PredPreyGrass/tree/5ae60b4/predpreygrass/non_evolutionary/continuous_space/selfish_flocking)
+(`nash_mixed.py`, `README.md`); its checkpoints and evaluation output are in
+`output/selfish_flocking_ppg_20261022/` (local, not tracked).
+
 ## Optional DDPG stabilization and progress
 
 The unwrapped seed-42 DDPG run diverged during full-budget training. `--wrap-ddpg-actions` selects an **experimental stabilization variant**: behavior, replay and every critic input use angles in [-180°, 180°), or [-pi, pi) for radian actions. The actor head stays linear and gradients pass through the wrap except at its discontinuities. This changes optimization, so wrapped results must be reported separately from the original reconstruction. The default remains unwrapped for compatibility.
